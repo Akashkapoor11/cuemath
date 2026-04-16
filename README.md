@@ -79,6 +79,8 @@ The app captures transcribed text only, not audio. Privacy-respecting (no audio 
 ---
 
 
+<img width="1916" height="1016" alt="Image" src="https://github.com/user-attachments/assets/557da099-1d18-4b91-9e6c-23067a08c421" />
+
 ## Interesting Technical Challenges
 
 ### Voice synthesis race condition
