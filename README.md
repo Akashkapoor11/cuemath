@@ -143,10 +143,10 @@ tutor-screener/
 | Layer | Choice | Reason |
 |-------|--------|--------|
 | Framework | Next.js 14 | Server API routes keep the key server-only; React for UI |
-| AI — Interview | `llama-3.3-70b-versatile` via Groq | Sub-second latency essential for voice UX |
-| AI — Assessment | `llama-3.3-70b-versatile` via Groq | Same model, lower temperature (0.4) for consistent HR reports |
+| AI - Interview | `llama-3.3-70b-versatile` via Groq | Sub-second latency essential for voice UX |
+| AI - Assessment | `llama-3.3-70b-versatile` via Groq | Same model, lower temperature (0.4) for consistent HR reports |
 | Voice Input | Web Speech API (SpeechRecognition) | Zero cost, zero latency, in-browser (Chrome recommended) |
-| Voice Output | Web Speech API (SpeechSynthesis) | Chitti speaks back — real conversation feel |
+| Voice Output | Web Speech API (SpeechSynthesis) | Chitti speaks back - real conversation feel |
 | Persistence | localStorage | No DB needed for demo; trivial to swap for Postgres |
 | Deployment | Vercel | Serverless functions, free tier, 60-second deploy |
 
@@ -154,12 +154,12 @@ tutor-screener/
 
 ## Security
 
-- `GROQ_API_KEY` lives only in Vercel's server environment — **never** in the browser bundle
+- `GROQ_API_KEY` lives only in Vercel's server environment - **never** in the browser bundle
 - All LLM calls go through `/api/interview` (Next.js serverless function)
 - `.env.local` is in `.gitignore` and is never committed
 - No candidate audio is recorded or transmitted
 - localStorage data never leaves the user's device
-- HR dashboard is PIN-protected — candidates cannot access interviewer data
+- HR dashboard is PIN-protected - candidates cannot access interviewer data
 
 ---
 
