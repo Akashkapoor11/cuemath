@@ -78,17 +78,6 @@ The app captures transcribed text only, not audio. Privacy-respecting (no audio 
 
 ---
 
-## What I'd Add With More Time
-
-1. **Auth for the dashboard** - The `/dashboard` route should require a Cuemath HR login. A candidate shouldn't be able to open it.
-2. **Webhook on "Move Forward"** - Auto-push advancing candidates to an ATS (Greenhouse, Lever) via a serverless function.
-3. **Multi-language support** - Many Cuemath tutors aren't English-native. An interview mode in Hindi or Tamil would significantly expand the candidate pool.
-4. **Calibration mode** - HR shows the system 20 real interviews they've manually scored. Claude uses those as few-shot examples, making future scores match the company's actual bar.
-5. **Server-side Whisper** - Streaming audio → Whisper API for better transcription on accented speech and noisy environments.
-6. **Question bank** - Different question sets for math tutors, reading tutors, test-prep specialists - each mapped to dimension-specific rubrics.
-7. **Candidate consent flow** - GDPR-compliant consent screen, explicit data retention policy, one-click data deletion.
-
----
 
 ## Interesting Technical Challenges
 
