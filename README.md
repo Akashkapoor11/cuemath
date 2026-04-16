@@ -1,4 +1,4 @@
-# 🎓 Cuemath AI Tutor Screener
+#  Cuemath AI Tutor Screener
 
 **Problem 3 - The AI Tutor Screener**
 
