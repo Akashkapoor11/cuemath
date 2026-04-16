@@ -38,6 +38,9 @@ A persistent dashboard where Cuemath's recruiting team can review every complete
 
 ---
 
+<img width="1919" height="912" alt="Image" src="https://github.com/user-attachments/assets/ce97a88e-a8be-4f74-a864-6360dc9e11e7" />
+<img width="1919" height="918" alt="Image" src="https://github.com/user-attachments/assets/5fe7c4e2-51c0-4998-bfa8-74f90503a032" />
+
 ## Key Technical Decisions & Tradeoffs
 
 ### 1. Two-model architecture - speed vs. depth
@@ -120,8 +123,6 @@ Despite prompt instructions, `llama-3.3-70b-versatile` occasionally wraps JSON i
 
 ---
 
-<img width="1919" height="912" alt="Image" src="https://github.com/user-attachments/assets/ce97a88e-a8be-4f74-a864-6360dc9e11e7" />
-<img width="1919" height="918" alt="Image" src="https://github.com/user-attachments/assets/5fe7c4e2-51c0-4998-bfa8-74f90503a032" />
 
 ## File Structure
 
