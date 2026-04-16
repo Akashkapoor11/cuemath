@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@500;600&display=swap');
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  min-height: 100%;
+  font-family: 'Inter', sans-serif;
+  color: #1a1d2e;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+textarea, input { font-family: 'Inter', sans-serif; }
+button { font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.18s ease; }
+button:active { transform: scale(0.97); }
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* Dark scrollbar for dark screens */
+.dark-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); }
+.dark-scroll::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+/* ─── Keyframes ─── */
+
+/* For audio waveform bars — vertical scale */
+@keyframes pulse {
+  0%, 100% { transform: scaleY(0.3); opacity: 0.6; }
+  50%       { transform: scaleY(1);   opacity: 1;   }
+}
+
+/* For thinking / loading dots — vertical bounce + opacity */
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0);    opacity: 0.35; }
+  40%            { transform: translateY(-7px); opacity: 1;    }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Welcome screen hero text + cards */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* New chat message appearance */
+@keyframes msgFade {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Pulse glow for live indicator / badge dot */
+@keyframes glow {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.3; }
+}
+
+/* Confetti pieces falling from top */
+@keyframes confettiFall {
+  0%   { transform: translateY(-30px) rotate(0deg) scale(1);   opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg) scale(0.7); opacity: 0; }
+}
+
+/* Priya speaking — pulsing ring on avatar */
+@keyframes speakPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(99,102,241,0.55), 0 4px 12px rgba(99,102,241,0.32); }
+  50%  { box-shadow: 0 0 0 8px rgba(99,102,241,0),    0 4px 12px rgba(99,102,241,0.32); }
+  100% { box-shadow: 0 0 0 0   rgba(99,102,241,0.55), 0 4px 12px rgba(99,102,241,0.32); }
+}
+
+/* Celebration banner entrance */
+@keyframes celebrationSlide {
+  from { opacity: 0; transform: translateY(-16px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)      scale(1);    }
+}
+
+/* ─── Utility classes ─── */
+.fadeIn        { animation: fadeIn        0.55s ease both; }
+.msgFade       { animation: msgFade       0.3s  ease both; }
+.fade          { animation: fadeIn        0.4s  ease both; }
+.celebration   { animation: celebrationSlide 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+
+/* ─── Print ─── */
+@media print {
+  .no-print { display: none !important; }
+  body { background: #fff; color: #111; }
+}
