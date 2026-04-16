@@ -38,7 +38,7 @@ A persistent dashboard where Cuemath's recruiting team can review every complete
 ## Key Technical Decisions & Tradeoffs
 
 ### 1. Two-model architecture - speed vs. depth
-The interview conversation uses **`llama-3.3-70b-versatile`** via Groq (sub-second latency) so Chitti's replies feel instantaneous — like a real phone call. Assessment generation uses the same model with a stricter prompt and lower temperature so the HR report is thorough and evidence-backed.
+The interview conversation uses **`llama-3.3-70b-versatile`** via Groq (sub-second latency) so Chitti's replies feel instantaneous - like a real phone call. Assessment generation uses the same model with a stricter prompt and lower temperature so the HR report is thorough and evidence-backed.
 
 Both stages use the same model (`llama-3.3-70b-versatile`) but with different parameters: `temperature: 0.75` for conversation (natural, warm replies) vs `temperature: 0.4` for assessment (consistent, evidence-backed scoring). The architecture is designed so the assessment prompt can be swapped to a larger model (e.g., llama-3.1-405b) with no code changes.
 
