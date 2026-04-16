@@ -692,9 +692,22 @@ export default function TutorScreener() {
       <Head>
         <title>Cuemath Tutor Screening — AI Interviewer</title>
         <meta name="description" content="Complete a short AI-powered voice interview with Chitti and receive an instant structured assessment." />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%236366f1'/><path d='M16 7l7 4v8l-7 4-7-4V11z' fill='none' stroke='white' stroke-width='1.5'/><circle cx='16' cy='15' r='2.5' fill='white'/><line x1='16' y1='17.5' x2='16' y2='20' stroke='white' stroke-width='1.5'/><line x1='13' y1='20' x2='19' y2='20' stroke='white' stroke-width='1.5'/></svg>" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <style>{`
+          .nav-text-links { display: flex; }
+          .nav-divider { display: block; }
+          @media (max-width: 600px) {
+            .nav-text-links { display: none !important; }
+            .nav-divider { display: none !important; }
+            .nav-inner { padding: 0 16px !important; }
+          }
+          @media (max-width: 420px) {
+            .hero-grid { grid-template-columns: 1fr !important; }
+          }
+        `}</style>
       </Head>
 
       {/* ── Browser compatibility banner ── */}
@@ -719,16 +732,16 @@ export default function TutorScreener() {
       )}
 
       {/* ════ Navbar ════ */}
-      <nav style={{
+      <nav className="nav-inner" style={{
         position: "sticky", top: !isChrome ? 48 : 0, zIndex: 100,
-        background: "rgba(255,255,255,0.95)", backdropFilter: "blur(20px)",
+        background: "rgba(255,255,255,0.97)", backdropFilter: "blur(20px)",
         borderBottom: "1px solid #e2e8f0",
         padding: "0 36px", height: 60,
         display: "flex", alignItems: "center", justifyContent: "space-between",
         boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
-          <svg width="38" height="38" viewBox="0 0 44 44" fill="none">
+          <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
             <rect width="44" height="44" rx="13" fill="url(#navLG2)"/>
             <defs><linearGradient id="navLG2" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#a78bfa"/></linearGradient></defs>
             <rect x="19" y="14" width="6" height="9" rx="3" fill="white"/>
@@ -737,28 +750,32 @@ export default function TutorScreener() {
             <line x1="19" y1="29" x2="25" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
           </svg>
           <div>
-            <div style={{ fontSize: 18, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.03em", lineHeight: 1 }}>Cuemath</div>
-            <div style={{ fontSize: 10, color: "#6366f1", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>AI Tutor Screener</div>
+            <div style={{ fontSize: 17, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.03em", lineHeight: 1 }}>Cuemath</div>
+            <div style={{ fontSize: 9, color: "#6366f1", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase" }}>AI Tutor Screener</div>
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          {[{ label: "How it works", href: "#" }, { label: "About Cuemath", href: "https://cuemath.com", ext: true }].map(n => (
-            <a key={n.label} href={n.href}
-              onClick={n.label === "How it works" ? (e) => { e.preventDefault(); setShowHowModal(true); } : undefined}
-              target={n.ext ? "_blank" : undefined} rel={n.ext ? "noreferrer" : undefined}
-              style={{ padding: "7px 14px", borderRadius: 8, fontSize: 13, color: "#1e293b", fontWeight: 500, textDecoration: "none", transition: "color 0.15s", cursor: "pointer" }}
-              onMouseEnter={e => (e.currentTarget.style.color = "#6366f1")}
-              onMouseLeave={e => (e.currentTarget.style.color = "#1e293b")}
-            >{n.label}</a>
-          ))}
-          <div style={{ width: 1, height: 20, background: "#e2e8f0", margin: "0 10px" }} />
+          {/* Hidden on mobile via CSS */}
+          <div className="nav-text-links" style={{ alignItems: "center", gap: 4 }}>
+            {[{ label: "How it works", href: "#" }, { label: "About Cuemath", href: "https://cuemath.com", ext: true }].map(n => (
+              <a key={n.label} href={n.href}
+                onClick={n.label === "How it works" ? (e) => { e.preventDefault(); setShowHowModal(true); } : undefined}
+                target={n.ext ? "_blank" : undefined} rel={n.ext ? "noreferrer" : undefined}
+                style={{ padding: "7px 12px", borderRadius: 8, fontSize: 13, color: "#1e293b", fontWeight: 500, textDecoration: "none", transition: "color 0.15s", cursor: "pointer", whiteSpace: "nowrap" }}
+                onMouseEnter={e => (e.currentTarget.style.color = "#6366f1")}
+                onMouseLeave={e => (e.currentTarget.style.color = "#1e293b")}
+              >{n.label}</a>
+            ))}
+          </div>
+          <div className="nav-divider" style={{ width: 1, height: 20, background: "#e2e8f0", margin: "0 8px" }} />
           <Link href="/dashboard" style={{
-            padding: "8px 18px", borderRadius: 10, fontSize: 13, color: "#fff", fontWeight: 700,
+            padding: "8px 16px", borderRadius: 10, fontSize: 13, color: "#fff", fontWeight: 700,
             textDecoration: "none",
             background: "linear-gradient(135deg,#6366f1,#0ea5e9)",
             boxShadow: "0 2px 10px rgba(99,102,241,0.35)",
-            display: "flex", alignItems: "center", gap: 7,
+            display: "flex", alignItems: "center", gap: 6,
             transition: "box-shadow 0.2s, transform 0.15s",
+            whiteSpace: "nowrap",
           }}
             onMouseEnter={e => { e.currentTarget.style.boxShadow = "0 6px 18px rgba(99,102,241,0.45)"; e.currentTarget.style.transform = "translateY(-1px)"; }}
             onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 10px rgba(99,102,241,0.35)"; e.currentTarget.style.transform = ""; }}
@@ -830,7 +847,7 @@ export default function TutorScreener() {
             <div style={{ fontSize: 10, color: "#64748b", textTransform: "uppercase", letterSpacing: "0.12em", marginBottom: 10, fontWeight: 700 }}>
               What Chitti evaluates
             </div>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
+            <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
               {[
                 { label: "Communication Clarity", icon: "💬", bg: "rgba(14,165,233,0.07)",   bd: "rgba(14,165,233,0.2)" },
                 { label: "Warmth & Patience",      icon: "🤝", bg: "rgba(16,185,129,0.07)",  bd: "rgba(16,185,129,0.2)" },
