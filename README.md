@@ -79,7 +79,7 @@ The app captures transcribed text only, not audio. Privacy-respecting (no audio 
 ---
 
 
-<img width="1916" height="1016" alt="Image" src="https://github.com/user-attachments/assets/557da099-1d18-4b91-9e6c-23067a08c421" />
+<img width="1916" height="954" alt="Image" src="https://github.com/user-attachments/assets/9225b027-8058-414c-800a-0c0e166e4306" />
 
 ## Interesting Technical Challenges
 
