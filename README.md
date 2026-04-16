@@ -5,7 +5,7 @@
 > An end-to-end AI screening system that replaces 10-minute human phone screens with a structured voice interview, instant multi-dimensional assessment, and an HR dashboard for managing all candidates - built as a take-home challenge for Cuemath's 2nd round assessment.
 
 ---
-## (DESKTOP MODE RECOMMENDED)
+## (DESKTOP MODE RECOMMENDED)  ## Hr lock passward- 2408
 ## Live Demo
 🔗 **[Deployment Link] - (https://cuemath-rho.vercel.app/)**
 
