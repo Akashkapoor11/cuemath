@@ -1,8 +1,8 @@
 #  Cuemath AI Tutor Screener
 
-**Problem 3 - The AI Tutor Screener**
+**Problem - The AI Tutor Screener**
 
-> An end-to-end AI screening system that replaces 10-minute human phone screens with a structured voice interview, instant multi-dimensional assessment, and an HR dashboard for managing all candidates - built as a take-home challenge for Cuemath's 2nd round assessment.
+> An end-to-end AI screening system that replaces 10-minute human phone screens with a structured voice interview, instant multi-dimensional assessment, and an HR dashboard for managing all candidates .
 
 ---
 ## (DESKTOP MODE RECOMMENDED)  ## Hr lock passward- 2408
