@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { supabase } from "../lib/supabase";
 import Head from "next/head";
 import Link from "next/link";
 
@@ -502,34 +503,73 @@ export default function Dashboard() {
   const [loaded, setLoaded]         = useState(false);
   const [hasDemo, setHasDemo]       = useState(false);
   const [pinUnlocked, setPinUnlocked] = useState(false);
+  const [loadError, setLoadError]   = useState("");
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     if (!pinUnlocked) return;   // don't load data until unlocked
-    try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      let data = raw ? JSON.parse(raw) : [];
+    setLoaded(false);
+    setLoadError("");
 
-      /* Seed demo data if localStorage is empty */
-      if (data.length === 0) {
-        data = DEMO_DATA;
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(DEMO_DATA));
-        setHasDemo(true);
-      } else {
-        setHasDemo(data.some(i => i._demo));
+    async function loadData() {
+      try {
+        // ── Primary: fetch from Supabase (shared across all devices) ──
+        const { data: sbData, error } = await supabase
+          .from("interviews")
+          .select("*")
+          .order("date", { ascending: false });
+
+        if (error) throw error;
+
+        if (sbData && sbData.length > 0) {
+          // Map Supabase rows to the same shape the UI expects
+          const mapped = sbData.map(row => ({
+            id:         row.id?.toString() || row.created_at,
+            name:       row.name,
+            date:       row.date || row.created_at,
+            duration:   row.duration,
+            transcript: row.transcript || [],
+            report:     row.report,
+            _demo:      row._demo || false,
+          }));
+          setHasDemo(mapped.some(i => i._demo));
+          setInterviews(mapped);
+          setLoaded(true);
+          return;
+        }
+      } catch (err) {
+        console.warn("Supabase fetch failed, falling back to localStorage:", err.message);
+        setLoadError("Could not reach database — showing local data only.");
       }
 
-      setInterviews(data);
-    } catch {
-      setInterviews([]);
+      // ── Fallback: localStorage (local sessions only) ──
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        let data = raw ? JSON.parse(raw) : [];
+        if (data.length === 0) {
+          data = DEMO_DATA;
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(DEMO_DATA));
+          setHasDemo(true);
+        } else {
+          setHasDemo(data.some(i => i._demo));
+        }
+        setInterviews(data);
+      } catch {
+        setInterviews([]);
+      }
+      setLoaded(true);
     }
-    setLoaded(true);
-  }, [pinUnlocked]);
+
+    loadData();
+  }, [pinUnlocked, refreshKey]);
 
   const handleLock = () => {
     setPinUnlocked(false);
     setLoaded(false);
     setInterviews([]);
   };
+
+  const handleRefresh = () => setRefreshKey(k => k + 1);
 
   /* Show PIN screen if not yet unlocked */
   if (!pinUnlocked) return <PinLock onUnlock={() => setPinUnlocked(true)} />;
@@ -700,6 +740,20 @@ export default function Dashboard() {
               </>
             )}
             <button
+              onClick={handleRefresh}
+              title="Refresh from database"
+              style={{
+                background: "none", border: "1px solid #e5e7eb", color: "#6b7280",
+                padding: "8px 14px", borderRadius: 9, fontSize: 13, fontWeight: 500,
+                display: "inline-flex", alignItems: "center", gap: 6,
+                transition: "background 0.15s, color 0.15s", cursor: "pointer",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "#f0f9ff"; e.currentTarget.style.color = "#0369a1"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "none";    e.currentTarget.style.color = "#6b7280"; }}
+            >
+              🔄 Refresh
+            </button>
+            <button
               onClick={handleLock}
               title="Lock dashboard"
               style={{
@@ -727,7 +781,20 @@ export default function Dashboard() {
 
         <div style={{ maxWidth: 1060, margin: "0 auto", padding: "28px 20px 56px" }}>
 
-          {/* ── Demo data notice ── */}
+          {/* ── DB error banner ── */}
+          {loadError && (
+            <div style={{
+              background: "#fffbeb", border: "1px solid #fcd34d",
+              borderRadius: 14, padding: "10px 18px", marginBottom: 16,
+              display: "flex", alignItems: "center", gap: 10,
+              fontSize: 13, color: "#92400e",
+            }}>
+              <span style={{ fontSize: 16 }}>⚠️</span>
+              {loadError} <button onClick={handleRefresh} style={{ marginLeft: 8, color: "#92400e", fontWeight: 600, background: "none", border: "none", cursor: "pointer", textDecoration: "underline" }}>Retry</button>
+            </div>
+          )}
+
+          {/* ── Demo data notice — only show when there are no real interviews ── */}
           {hasDemo && (
             <div style={{
               background: "linear-gradient(135deg,#1e1b4b,#312e81)",
