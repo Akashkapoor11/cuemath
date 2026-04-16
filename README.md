@@ -13,6 +13,9 @@
 
 ---
 
+## Example of getting mail after test 
+<img width="1104" height="536" alt="Image" src="https://github.com/user-attachments/assets/d181278c-b81a-41c2-98e6-909733774931" />
+
 ## What I Built
 
 The product has two sides:
