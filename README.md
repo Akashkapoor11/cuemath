@@ -8,8 +8,8 @@
 
 ## Live Demo
 🔗 **[Live URL — add after deployment](https://cuemath-rho.vercel.app/)**
-//
-📹 **[Video Walkthrough](https://loom.com/your-link)** 
+
+**[Video Walkthrough](https://loom.com/your-link)** 
 
 ---
 
