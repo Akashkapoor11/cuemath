@@ -171,45 +171,6 @@ tutor-screener/
 
 ---
 
-## Deploy in 5 Minutes
-
-### 1. Test locally first
-```bash
-# Install dependencies (if not already done)
-npm install
-
-# Create .env.local from the example
-copy .env.local.example .env.local
-# → Open .env.local and replace your-groq-key-here with your real key from console.groq.com
-
-# Start dev server
-npm run dev
-
-# Open http://localhost:3000
-```
-
-### 2. Push to GitHub
-```bash
-git init
-git add .
-git commit -m "feat: Cuemath AI Tutor Screener — Problem 3"
-git branch -M main
-git remote add origin https://github.com/YOUR_USERNAME/cuemath-tutor-screener.git
-git push -u origin main
-```
-
-### 3. Deploy on Vercel
-1. Go to [vercel.com](https://vercel.com) → sign in with GitHub
-2. Click **Add New Project** → import your repo
-3. Under **Environment Variables**, add:
-   - Key: `GROQ_API_KEY`
-   - Value: your key from [console.groq.com](https://console.groq.com)
-4. Click **Deploy** - live in ~60 seconds
-
-### 4. Update this README
-Replace the Live Demo URL above with your actual Vercel URL.
-
----
 
 ## Local Development
 
