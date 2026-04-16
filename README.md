@@ -18,7 +18,7 @@
 The product has two sides:
 
 **Candidate-facing (`/`)**
-A voice-first interview interface where a candidate enters their name, then speaks with **"Priya"** - a warm, structured AI interviewer. Priya asks 6 carefully chosen questions, adapts when an answer is too short, and closes naturally when done. The full transcript is then sent to a stronger AI model for deep analysis. The candidate sees a structured report in seconds - complete with dimension scores, strengths, concerns, and direct evidence quotes. Candidates who move forward get a confetti celebration.
+A voice-first interview interface where a candidate enters their name, then speaks with **"Chitti"** - a warm, structured AI interviewer. Chitti asks 6 carefully chosen questions, adapts when an answer is too short, and closes naturally when done. The full transcript is then sent to a stronger AI model for deep analysis. The candidate sees a structured report in seconds - complete with dimension scores, strengths, concerns, and direct evidence quotes. Candidates who move forward get a confetti celebration.
 
 **HR-facing (`/dashboard`)**
 A persistent dashboard where Cuemath's recruiting team can review every completed interview - filter by verdict, sort by score, search by name, and expand any candidate for their full assessment. Ships with 3 realistic demo candidates so evaluators can see the full value immediately without completing a real interview.
