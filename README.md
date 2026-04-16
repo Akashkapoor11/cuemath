@@ -86,7 +86,7 @@ The app captures transcribed text only, not audio. Privacy-respecting (no audio 
 ## Interesting Technical Challenges
 
 ### Voice synthesis race condition
-`window.speechSynthesis.getVoices()` returns an empty array on the first call — voices load asynchronously after page load. This caused Chitti's voice to fall back to the browser default on the first message, sounding robotic.
+`window.speechSynthesis.getVoices()` returns an empty array on the first call - voices load asynchronously after page load. This caused Chitti's voice to fall back to the browser default on the first message, sounding robotic.
 
 **Fix**: Added an `onvoiceschanged` event handler that fires once when voices are ready, picks the preferred voice, then nullifies itself. Subsequent calls hit the cache directly.
 
