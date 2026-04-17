@@ -9,7 +9,6 @@
 ## Live Demo
 🔗 **[Deployment Link] - (https://cuemath-rho.vercel.app/)**
 
-**[Video Walkthrough](https://loom.com/your-link)** 
 
 ---
 
