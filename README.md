@@ -221,30 +221,4 @@ npm run dev
 
 > **Chrome on desktop is required** for voice recognition. Firefox and Safari do not support the Web Speech API reliably. The app will display a clear warning and offer text-input fallback for non-Chrome users.
 
-## Production Deployment
 
-The project is configured for seamless deployment on Vercel:
-
-1. Push to GitHub repository
-2. Connect repository to Vercel
-3. Add all environment variables in Vercel dashboard
-4. Deploy automatically on every push
-
-Current production deployment: https://cuemath-rho.vercel.app/
-
----
-
-## Recent Updates & Improvements
-
-- **Mobile Responsiveness**: Enhanced CSS with responsive breakpoints, touch-optimized buttons, and fluid typography using `clamp()` and `min()` functions
-- **Supabase Integration**: Production database for persistent candidate data across all devices
-- **Email Reporting**: Automated result distribution to candidates via Gmail API
-- **Accessibility**: ARIA labels, screen reader support, and improved keyboard navigation
-- **Front Page Sync**: Candidate count now matches HR portal database (fetches from Supabase)
-- **Performance**: Optimized API calls and reduced bundle size for faster loading
-
----
-
-## License
-
-MIT License - see LICENSE file for details.
