@@ -35,6 +35,8 @@ A persistent dashboard where Cuemath's recruiting team can review every complete
 | `/` | Candidate interview - voice or text |
 | `/dashboard` | HR dashboard - all completed interviews |
 | `/api/interview` | Serverless API - proxies to Groq, keeps key server-side |
+| `/api/transcribe` | Fallback transcription API for non-Chrome browsers |
+| `/api/send-email` | Email reporting system for candidate results |
 
 ---
 
@@ -62,22 +64,32 @@ Fully dynamic interviews create assessment inconsistency - different candidates 
 
 The model can still probe within each question if an answer is too short. That's adaptive enough without losing comparability.
 
-### 4. localStorage persistence - demo-appropriate
-Rather than spinning up Postgres for a one-week prototype, completed interviews are stored in `localStorage`. The HR dashboard reads this immediately, with no backend setup.
+### 4. Supabase for production data persistence
+Completed interviews are stored in **Supabase PostgreSQL database** for production-ready data persistence. The system provides:
+- Real-time synchronization across all devices
+- HR dashboard reads from shared database
+- Front page displays accurate candidate count from Supabase
+- Fallback to localStorage if Supabase is unavailable
+- Email integration for candidate result distribution
 
-**Tradeoff**: Data is device-local and doesn't survive a browser clear. For production: Supabase or PlanetScale with a simple `interviews` table, JWT auth for the dashboard route.
+### 5. Mobile-first responsive design
+The interface is fully responsive across all device sizes:
+- CSS `clamp()` and `min()` functions for fluid typography and spacing
+- Touch-optimized buttons with `clamp(44px, 6vh, 52px)` sizing
+- Responsive ambient blobs that adapt to screen dimensions
+- Media queries for breakpoints at 768px, 640px, 560px, 480px, and 360px
+- Accessibility enhancements with ARIA labels and screen reader support
 
-### 5. Calibrated assessment rubric in the prompt
+### 6. Calibrated assessment rubric in the prompt
 The assessment system prompt includes an explicit scoring rubric (9–10 exceptional, 7–8 strong, 5–6 adequate…) and tells Claude to be *conservative* with high scores. Without this, Claude tends to give generic 7s across the board - the rubric makes scores meaningful and differentiated.
 
-### 6. Demo seeding for evaluator UX
+### 7. Demo seeding for evaluator UX
 The dashboard seeds 3 realistic synthetic candidates on first visit. This matters: evaluators won't sit through a full interview before forming an impression of the product. Seeing a rich, populated HR dashboard immediately communicates the full value of the system.
 
-### 7. No audio recording - by design
+### 8. No audio recording - by design
 The app captures transcribed text only, not audio. Privacy-respecting (no audio leaves the browser) and simpler to deploy. A real production version would offer optional audio recording with explicit candidate consent, stored encrypted server-side.
 
 ---
-
 
 <img width="1916" height="954" alt="Image" src="https://github.com/user-attachments/assets/9225b027-8058-414c-800a-0c0e166e4306" />
 
@@ -115,7 +127,6 @@ Despite prompt instructions, `llama-3.3-70b-versatile` occasionally wraps JSON i
 
 ---
 
-
 ## File Structure
 
 ```
@@ -123,16 +134,21 @@ tutor-screener/
 ├── pages/
 │   ├── _app.js          # Global CSS import
 │   ├── index.js         # Candidate interview UI (welcome → interview → report)
-│   ├── dashboard.js     # HR dashboard (reads localStorage, seeds demo data)
+│   ├── dashboard.js     # HR dashboard (reads Supabase + localStorage, seeds demo data)
 │   └── api/
-│       └── interview.js # Serverless function — Groq API proxy
+│       ├── interview.js # Serverless function — Groq API proxy
+│       ├── transcribe.js # Fallback transcription API
+│       └── send-email.js # Email reporting system
+├── lib/
+│   └── supabase.js      # Supabase client configuration
 ├── styles/
-│   └── globals.css      # Keyframes, reset, scrollbar, utility classes
+│   └── globals.css      # Keyframes, reset, scrollbar, utility classes, mobile responsive CSS
+├── public/              # Static assets
 ├── next.config.js
 ├── vercel.json          # 30s timeout for API route
 ├── package.json
 ├── .gitignore           # Excludes .env.local, node_modules, .next
-└── .env.local.example   # Template — copy to .env.local and add your key
+└── .env.local.example   # Template — copy to .env.local and add your keys
 ```
 
 ---
@@ -146,8 +162,10 @@ tutor-screener/
 | AI - Assessment | `llama-3.3-70b-versatile` via Groq | Same model, lower temperature (0.4) for consistent HR reports |
 | Voice Input | Web Speech API (SpeechRecognition) | Zero cost, zero latency, in-browser (Chrome recommended) |
 | Voice Output | Web Speech API (SpeechSynthesis) | Chitti speaks back - real conversation feel |
-| Persistence | localStorage | No DB needed for demo; trivial to swap for Postgres |
+| Database | Supabase PostgreSQL | Production-ready data persistence with real-time sync |
+| Email | Nodemailer + Gmail API | Automated candidate result distribution |
 | Deployment | Vercel | Serverless functions, free tier, 60-second deploy |
+| Styling | CSS Modules + Responsive Design | Mobile-first approach with modern CSS functions |
 
 ---
 
@@ -157,11 +175,31 @@ tutor-screener/
 - All LLM calls go through `/api/interview` (Next.js serverless function)
 - `.env.local` is in `.gitignore` and is never committed
 - No candidate audio is recorded or transmitted
-- localStorage data never leaves the user's device
-- HR dashboard is PIN-protected - candidates cannot access interviewer data
+- Supabase database uses Row Level Security (RLS) for data protection
+- HR dashboard is PIN-protected (2408) - candidates cannot access interviewer data
+- Email credentials stored as environment variables, never in client code
 
 ---
 
+## Environment Variables
+
+Copy `.env.local.example` to `.env.local` and fill in:
+
+```bash
+# AI Configuration
+GROQ_API_KEY=your_groq_api_key_here
+
+# Database Configuration  
+NEXT_PUBLIC_SUPABASE_URL=your_supabase_project_url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
+
+# Email Configuration
+GMAIL_USER=your_email@gmail.com
+GMAIL_APP_PASSWORD=your_app_specific_password
+
+# Deployment URLs (optional)
+NEXT_PUBLIC_BASE_URL=https://cuemath-rho.vercel.app
+```
 
 ## Local Development
 
@@ -172,6 +210,8 @@ npm install
 # 2. Create .env.local from the example
 copy .env.local.example .env.local
 # Add your GROQ_API_KEY inside (get one free at console.groq.com)
+# Add Supabase credentials (create free project at supabase.com)
+# Add Gmail credentials for email functionality
 
 # 3. Start dev server
 npm run dev
@@ -180,3 +220,31 @@ npm run dev
 ```
 
 > **Chrome on desktop is required** for voice recognition. Firefox and Safari do not support the Web Speech API reliably. The app will display a clear warning and offer text-input fallback for non-Chrome users.
+
+## Production Deployment
+
+The project is configured for seamless deployment on Vercel:
+
+1. Push to GitHub repository
+2. Connect repository to Vercel
+3. Add all environment variables in Vercel dashboard
+4. Deploy automatically on every push
+
+Current production deployment: https://cuemath-rho.vercel.app/
+
+---
+
+## Recent Updates & Improvements
+
+- **Mobile Responsiveness**: Enhanced CSS with responsive breakpoints, touch-optimized buttons, and fluid typography using `clamp()` and `min()` functions
+- **Supabase Integration**: Production database for persistent candidate data across all devices
+- **Email Reporting**: Automated result distribution to candidates via Gmail API
+- **Accessibility**: ARIA labels, screen reader support, and improved keyboard navigation
+- **Front Page Sync**: Candidate count now matches HR portal database (fetches from Supabase)
+- **Performance**: Optimized API calls and reduced bundle size for faster loading
+
+---
+
+## License
+
+MIT License - see LICENSE file for details.
