@@ -109,7 +109,9 @@ Return ONLY valid JSON — no markdown fences, no prose, no commentary:
     ...messages,
   ];
 
-  try {
+  const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+  async function callGroq(retryOnRateLimit = true) {
     const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -123,6 +125,19 @@ Return ONLY valid JSON — no markdown fences, no prose, no commentary:
         temperature: isAssessment ? 0.4 : 0.85,
       }),
     });
+
+    // Auto-retry once on 429 after a 5-second wait
+    if (response.status === 429 && retryOnRateLimit) {
+      console.warn("Groq 429 — waiting 5s then retrying once...");
+      await sleep(5000);
+      return callGroq(false); // retry once only
+    }
+
+    return response;
+  }
+
+  try {
+    const response = await callGroq();
 
     if (!response.ok) {
       const errText = await response.text();

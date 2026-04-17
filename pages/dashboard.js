@@ -112,18 +112,18 @@ const DEMO_DATA = [
 ];
 
 const C = {
-  indigo:      "#6366f1",
+  indigo: "#6366f1",
   indigoLight: "#818cf8",
-  indigoGlow:  "rgba(99,102,241,0.30)",
-  green:  "#10b981",
-  amber:  "#f59e0b",
-  red:    "#ef4444",
+  indigoGlow: "rgba(99,102,241,0.30)",
+  green: "#10b981",
+  amber: "#f59e0b",
+  red: "#ef4444",
 };
 
 function getVerdict(v) {
-  if (v === "Move Forward")  return { label: "Move Forward",    color: "#059669", bg: "#d1fae5", border: "#6ee7b7" };
-  if (v === "Hold")          return { label: "Hold",            color: "#d97706", bg: "#fef3c7", border: "#fcd34d" };
-  return                            { label: "Not Recommended", color: "#dc2626", bg: "#fee2e2", border: "#fca5a5" };
+  if (v === "Move Forward") return { label: "Move Forward", color: "#059669", bg: "#d1fae5", border: "#6ee7b7" };
+  if (v === "Hold") return { label: "Hold", color: "#d97706", bg: "#fef3c7", border: "#fcd34d" };
+  return { label: "Not Recommended", color: "#dc2626", bg: "#fee2e2", border: "#fca5a5" };
 }
 
 function scoreColor(s) {
@@ -162,8 +162,8 @@ function ScoreRing({ score, size = 52 }) {
   return (
     <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ transform: "rotate(-90deg)", position: "absolute" }}>
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke="#f3f4f6" strokeWidth={4} />
-        <circle cx={size/2} cy={size/2} r={r} fill="none" stroke={col} strokeWidth={4}
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="#f3f4f6" strokeWidth={4} />
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={col} strokeWidth={4}
           strokeDasharray={circ.toFixed(2)} strokeDashoffset={offset.toFixed(2)}
           strokeLinecap="round"
           style={{ transition: "stroke-dashoffset 1s ease" }}
@@ -360,9 +360,9 @@ function CandidateCard({ entry, expanded, onToggle, onDelete }) {
 /* ─── PIN Lock Screen ─── */
 function PinLock({ onUnlock }) {
   const [digits, setDigits] = useState("");
-  const [shake, setShake]   = useState(false);
-  const [error, setError]   = useState("");
-  const inputRef            = useRef(null);
+  const [shake, setShake] = useState(false);
+  const [error, setError] = useState("");
+  const inputRef = useRef(null);
 
   useEffect(() => { inputRef.current?.focus(); }, []);
 
@@ -384,7 +384,7 @@ function PinLock({ onUnlock }) {
 
   const handleBackspace = () => { setDigits(d => d.slice(0, -1)); setError(""); };
 
-  const keys = ["1","2","3","4","5","6","7","8","9","","0","⌫"];
+  const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "⌫"];
 
   return (
     <>
@@ -399,9 +399,9 @@ function PinLock({ onUnlock }) {
         display: "flex", alignItems: "center", justifyContent: "center",
         fontFamily: "'Inter', sans-serif", padding: "20px",
       }}>
-        {/* ambient blobs */}
-        <div style={{ position: "fixed", top: "10%", left: "5%", width: 420, height: 420, background: "rgba(99,102,241,0.07)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
-        <div style={{ position: "fixed", bottom: "10%", right: "5%", width: 340, height: 340, background: "rgba(139,92,246,0.06)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
+        {/* ambient blobs - responsive sizes */}
+        <div style={{ position: "fixed", top: "10%", left: "5%", width: "min(420px, 85vw)", height: "min(420px, 85vw)", background: "rgba(99,102,241,0.07)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
+        <div style={{ position: "fixed", bottom: "10%", right: "5%", width: "min(340px, 70vw)", height: "min(340px, 70vw)", background: "rgba(139,92,246,0.06)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
 
         <div style={{ maxWidth: 360, width: "100%", textAlign: "center" }}>
 
@@ -413,16 +413,16 @@ function PinLock({ onUnlock }) {
             boxShadow: "0 8px 32px rgba(99,102,241,0.35)",
           }}>
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="11" width="18" height="11" rx="2" fill="white" opacity="0.9"/>
-              <path d="M7 11V7a5 5 0 0110 0v4" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none"/>
-              <circle cx="12" cy="16" r="1.5" fill="#6366f1"/>
+              <rect x="3" y="11" width="18" height="11" rx="2" fill="white" opacity="0.9" />
+              <path d="M7 11V7a5 5 0 0110 0v4" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" />
+              <circle cx="12" cy="16" r="1.5" fill="#6366f1" />
             </svg>
           </div>
 
           <div style={{ fontSize: 11, color: "#6366f1", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 10 }}>HR Access Only</div>
           <h1 style={{ fontSize: 26, fontWeight: 800, color: "#f8fafc", letterSpacing: "-0.02em", marginBottom: 8 }}>Dashboard PIN</h1>
           <p style={{ fontSize: 14, color: "#64748b", marginBottom: 36, lineHeight: 1.7 }}>
-            This dashboard is for Cuemath recruiting staff only.<br/>
+            This dashboard is for Cuemath recruiting staff only.<br />
             Candidates — please go back to your{" "}
             <Link href="/" style={{ color: "#818cf8", textDecoration: "none", fontWeight: 600 }}>interview page</Link>.
           </p>
@@ -435,7 +435,7 @@ function PinLock({ onUnlock }) {
               animation: shake ? "pinShake 0.5s ease" : "none",
             }}
           >
-            {[0,1,2,3].map(i => (
+            {[0, 1, 2, 3].map(i => (
               <div key={i} style={{
                 width: 16, height: 16, borderRadius: "50%",
                 border: `2px solid ${i < digits.length ? "#6366f1" : "rgba(255,255,255,0.2)"}`,
@@ -457,23 +457,23 @@ function PinLock({ onUnlock }) {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 10, maxWidth: 260, margin: "0 auto 32px" }}>
             {keys.map((k, idx) => (
               k === "" ? <div key={idx} /> :
-              <button
-                key={idx}
-                onClick={() => k === "⌫" ? handleBackspace() : handleKey(k)}
-                style={{
-                  height: 60, borderRadius: 14,
-                  border: "1px solid rgba(255,255,255,0.08)",
-                  background: k === "⌫" ? "rgba(239,68,68,0.12)" : "rgba(255,255,255,0.06)",
-                  color: k === "⌫" ? "#f87171" : "#e2e8f0",
-                  fontSize: k === "⌫" ? 20 : 22, fontWeight: 600,
-                  cursor: "pointer", transition: "all 0.15s",
-                  backdropFilter: "blur(8px)",
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = k === "⌫" ? "rgba(239,68,68,0.22)" : "rgba(99,102,241,0.22)"; e.currentTarget.style.borderColor = k === "⌫" ? "rgba(239,68,68,0.4)" : "rgba(99,102,241,0.4)"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = k === "⌫" ? "rgba(239,68,68,0.12)" : "rgba(255,255,255,0.06)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
-              >
-                {k}
-              </button>
+                <button
+                  key={idx}
+                  onClick={() => k === "⌫" ? handleBackspace() : handleKey(k)}
+                  style={{
+                    height: 60, borderRadius: 14,
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: k === "⌫" ? "rgba(239,68,68,0.12)" : "rgba(255,255,255,0.06)",
+                    color: k === "⌫" ? "#f87171" : "#e2e8f0",
+                    fontSize: k === "⌫" ? 20 : 22, fontWeight: 600,
+                    cursor: "pointer", transition: "all 0.15s",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = k === "⌫" ? "rgba(239,68,68,0.22)" : "rgba(99,102,241,0.22)"; e.currentTarget.style.borderColor = k === "⌫" ? "rgba(239,68,68,0.4)" : "rgba(99,102,241,0.4)"; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = k === "⌫" ? "rgba(239,68,68,0.12)" : "rgba(255,255,255,0.06)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.08)"; }}
+                >
+                  {k}
+                </button>
             ))}
           </div>
 
@@ -496,14 +496,14 @@ function PinLock({ onUnlock }) {
 /* ─── Main Dashboard ─── */
 export default function Dashboard() {
   const [interviews, setInterviews] = useState([]);
-  const [filter, setFilter]         = useState("All");
-  const [search, setSearch]         = useState("");
-  const [sortBy, setSortBy]         = useState("date");
-  const [expanded, setExpanded]     = useState(null);
-  const [loaded, setLoaded]         = useState(false);
-  const [hasDemo, setHasDemo]       = useState(false);
+  const [filter, setFilter] = useState("All");
+  const [search, setSearch] = useState("");
+  const [sortBy, setSortBy] = useState("date");
+  const [expanded, setExpanded] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+  const [hasDemo, setHasDemo] = useState(false);
   const [pinUnlocked, setPinUnlocked] = useState(false);
-  const [loadError, setLoadError]   = useState("");
+  const [loadError, setLoadError] = useState("");
   const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
@@ -524,13 +524,13 @@ export default function Dashboard() {
         if (sbData && sbData.length > 0) {
           // Map Supabase rows to the same shape the UI expects
           const mapped = sbData.map(row => ({
-            id:         row.id?.toString() || row.created_at,
-            name:       row.name,
-            date:       row.date || row.created_at,
-            duration:   row.duration,
+            id: row.id?.toString() || row.created_at,
+            name: row.name,
+            date: row.date || row.created_at,
+            duration: row.duration,
             transcript: row.transcript || [],
-            report:     row.report,
-            _demo:      row._demo || false,
+            report: row.report,
+            _demo: row._demo || false,
           }));
           setHasDemo(mapped.some(i => i._demo));
           setInterviews(mapped);
@@ -578,7 +578,7 @@ export default function Dashboard() {
     if (!confirm("Remove this interview record permanently?")) return;
     const updated = interviews.filter(i => i.id !== id);
     setInterviews(updated);
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch {}
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(updated)); } catch { }
     if (expanded === id) setExpanded(null);
     setHasDemo(updated.some(i => i._demo));
   };
@@ -588,19 +588,19 @@ export default function Dashboard() {
     setInterviews([]);
     setExpanded(null);
     setHasDemo(false);
-    try { localStorage.removeItem(STORAGE_KEY); } catch {}
+    try { localStorage.removeItem(STORAGE_KEY); } catch { }
   };
 
   const handleExportCSV = () => {
     if (!interviews.length) return;
-    const headers = ["Name","Date","Duration","Verdict","Overall Score","Communication Clarity","Warmth & Patience","Ability to Simplify","English Fluency","Teaching Aptitude","Summary","Recommendation"];
+    const headers = ["Name", "Date", "Duration", "Verdict", "Overall Score", "Communication Clarity", "Warmth & Patience", "Ability to Simplify", "English Fluency", "Teaching Aptitude", "Summary", "Recommendation"];
     const rows = interviews.map(iv => {
       const s = iv.report.scores || {};
       const avg = getAvg(s) || "";
       return [
         iv.name,
         new Date(iv.date).toLocaleDateString("en-IN"),
-        iv.duration ? `${Math.floor(iv.duration/60)}m ${iv.duration%60}s` : "",
+        iv.duration ? `${Math.floor(iv.duration / 60)}m ${iv.duration % 60}s` : "",
         iv.report.overall,
         avg,
         s["Communication Clarity"] || "",
@@ -617,25 +617,25 @@ export default function Dashboard() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `cuemath-candidates-${new Date().toISOString().slice(0,10)}.csv`;
+    a.download = `cuemath-candidates-${new Date().toISOString().slice(0, 10)}.csv`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
   /* Stats */
   const stats = {
-    total:   interviews.length,
+    total: interviews.length,
     forward: interviews.filter(i => i.report.overall === "Move Forward").length,
-    hold:    interviews.filter(i => i.report.overall === "Hold").length,
-    not:     interviews.filter(i => i.report.overall === "Not Recommended").length,
+    hold: interviews.filter(i => i.report.overall === "Hold").length,
+    not: interviews.filter(i => i.report.overall === "Not Recommended").length,
   };
 
   const avgOverall = interviews.length
     ? (
-        interviews
-          .map(i => parseFloat(getAvg(i.report.scores) || 0))
-          .reduce((a, b) => a + b, 0) / interviews.length
-      ).toFixed(1)
+      interviews
+        .map(i => parseFloat(getAvg(i.report.scores) || 0))
+        .reduce((a, b) => a + b, 0) / interviews.length
+    ).toFixed(1)
     : null;
 
   const advanceRate = stats.total
@@ -657,10 +657,10 @@ export default function Dashboard() {
     });
 
   const FILTERS = [
-    { key: "All",             label: `All (${stats.total})`,         activeColor: C.indigo },
-    { key: "Move Forward",    label: `✓ Forward (${stats.forward})`,  activeColor: "#059669" },
-    { key: "Hold",            label: `◌ Hold (${stats.hold})`,        activeColor: "#d97706" },
-    { key: "Not Recommended", label: `✗ Not (${stats.not})`,          activeColor: "#dc2626" },
+    { key: "All", label: `All (${stats.total})`, activeColor: C.indigo },
+    { key: "Move Forward", label: `✓ Forward (${stats.forward})`, activeColor: "#059669" },
+    { key: "Hold", label: `◌ Hold (${stats.hold})`, activeColor: "#d97706" },
+    { key: "Not Recommended", label: `✗ Not (${stats.not})`, activeColor: "#dc2626" },
   ];
 
   if (!loaded) return (
@@ -690,18 +690,18 @@ export default function Dashboard() {
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {/* SVG Logo */}
             <svg width="38" height="38" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-              <rect width="44" height="44" rx="13" fill="url(#dashLogoGrad)"/>
+              <rect width="44" height="44" rx="13" fill="url(#dashLogoGrad)" />
               <defs>
                 <linearGradient id="dashLogoGrad" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse">
-                  <stop stopColor="#6366f1"/>
-                  <stop offset="1" stopColor="#818cf8"/>
+                  <stop stopColor="#6366f1" />
+                  <stop offset="1" stopColor="#818cf8" />
                 </linearGradient>
               </defs>
-              <path d="M22 10l9 5.2v10.4L22 31l-9-5.4V15.2z" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1"/>
-              <rect x="19" y="14" width="6" height="9" rx="3" fill="white"/>
-              <path d="M17 21.5c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-              <line x1="22" y1="26.5" x2="22" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-              <line x1="19" y1="29" x2="25" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+              <path d="M22 10l9 5.2v10.4L22 31l-9-5.4V15.2z" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1" />
+              <rect x="19" y="14" width="6" height="9" rx="3" fill="white" />
+              <path d="M17 21.5c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+              <line x1="22" y1="26.5" x2="22" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+              <line x1="19" y1="29" x2="25" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
             <div>
               <div style={{ fontWeight: 700, fontSize: 15, color: "#111827", letterSpacing: "-0.01em" }}>Cuemath <span style={{ color: C.indigo }}>AI Screener</span></div>
@@ -749,7 +749,7 @@ export default function Dashboard() {
                 transition: "background 0.15s, color 0.15s", cursor: "pointer",
               }}
               onMouseEnter={e => { e.currentTarget.style.background = "#f0f9ff"; e.currentTarget.style.color = "#0369a1"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "none";    e.currentTarget.style.color = "#6b7280"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "#6b7280"; }}
             >
               🔄 Refresh
             </button>
@@ -763,7 +763,7 @@ export default function Dashboard() {
                 transition: "background 0.15s, color 0.15s", cursor: "pointer",
               }}
               onMouseEnter={e => { e.currentTarget.style.background = "#f9fafb"; e.currentTarget.style.color = "#374151"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "none";    e.currentTarget.style.color = "#6b7280"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "none"; e.currentTarget.style.color = "#6b7280"; }}
             >
               🔒 Lock
             </button>
@@ -823,10 +823,10 @@ export default function Dashboard() {
           {/* ── Stats Row ── */}
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 14, marginBottom: 28 }}>
             {[
-              { label: "Total Screened",  value: stats.total,   color: C.indigo, icon: "👥", sub: "candidates" },
-              { label: "Move Forward",    value: stats.forward, color: C.green,  icon: "✅", sub: `${advanceRate}% advance rate` },
-              { label: "On Hold",         value: stats.hold,    color: C.amber,  icon: "⏸️", sub: "review needed" },
-              { label: "Not Recommended", value: stats.not,     color: C.red,    icon: "❌", sub: "screened out" },
+              { label: "Total Screened", value: stats.total, color: C.indigo, icon: "👥", sub: "candidates" },
+              { label: "Move Forward", value: stats.forward, color: C.green, icon: "✅", sub: `${advanceRate}% advance rate` },
+              { label: "On Hold", value: stats.hold, color: C.amber, icon: "⏸️", sub: "review needed" },
+              { label: "Not Recommended", value: stats.not, color: C.red, icon: "❌", sub: "screened out" },
             ].map(s => (
               <div key={s.label} style={{
                 background: "#fff", border: "1px solid #e5e7eb", borderRadius: 16,
@@ -911,7 +911,7 @@ export default function Dashboard() {
                 transition: "border-color 0.2s",
               }}
               onFocus={e => (e.target.style.borderColor = C.indigo)}
-              onBlur={e  => (e.target.style.borderColor = "#e5e7eb")}
+              onBlur={e => (e.target.style.borderColor = "#e5e7eb")}
             />
           </div>
 

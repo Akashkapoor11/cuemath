@@ -25,16 +25,16 @@ function saveInterview(name, report, transcript, duration) {
 
 /* ─── Design tokens ─── */
 const C = {
-  indigo:      "#6366f1",
+  indigo: "#6366f1",
   indigoLight: "#818cf8",
-  indigoGlow:  "rgba(99,102,241,0.32)",
-  green:  "#10b981",
-  amber:  "#f59e0b",
-  red:    "#ef4444",
+  indigoGlow: "rgba(99,102,241,0.32)",
+  green: "#10b981",
+  amber: "#f59e0b",
+  red: "#ef4444",
   slate600: "#475569",
   slate500: "#64748b",
   slate400: "#94a3b8",
-  white:  "#ffffff",
+  white: "#ffffff",
 };
 
 /* ─── Stable API helper (module-level to avoid stale closures) ─── */
@@ -54,9 +54,9 @@ async function callAPI(messages, task = "interview") {
 
 /* ─── Helpers ─── */
 function verdictStyle(v) {
-  if (v === "Move Forward")  return { color: "#065f46", bg: "#d1fae5", border: "#6ee7b7" };
-  if (v === "Hold")          return { color: "#92400e", bg: "#fef3c7", border: "#fcd34d" };
-  return                            { color: "#991b1b", bg: "#fee2e2", border: "#fca5a5" };
+  if (v === "Move Forward") return { color: "#065f46", bg: "#d1fae5", border: "#6ee7b7" };
+  if (v === "Hold") return { color: "#92400e", bg: "#fef3c7", border: "#fcd34d" };
+  return { color: "#991b1b", bg: "#fee2e2", border: "#fca5a5" };
 }
 
 function scoreColor(s) {
@@ -72,7 +72,7 @@ function Confetti() {
     Array.from({ length: 55 }, (_, i) => ({
       id: i,
       left: `${Math.random() * 98 + 1}%`,
-      color: ["#6366f1","#10b981","#f59e0b","#ec4899","#8b5cf6","#06b6d4","#f97316"][i % 7],
+      color: ["#6366f1", "#10b981", "#f59e0b", "#ec4899", "#8b5cf6", "#06b6d4", "#f97316"][i % 7],
       size: 6 + (i % 5) * 2,
       delay: Math.random() * 1.8,
       duration: 2.2 + Math.random() * 2,
@@ -254,36 +254,36 @@ function SpeakingIndicator() {
 
 /* ─── Main component ─── */
 export default function TutorScreener() {
-  const [screen,       setScreen]       = useState("welcome");
-  const [name,         setName]         = useState("");
-  const [msgs,         setMsgs]         = useState([]);
-  const [inputVal,     setInputVal]     = useState("");
-  const [disabled,     setDisabled]     = useState(false);
-  const [qNum,         setQNum]         = useState(0);
-  const [elapsed,      setElapsed]      = useState(0);
-  const [isRecording,  setIsRecording]  = useState(false);
-  const [interim,      setInterim]      = useState("");
-  const [report,       setReport]       = useState(null);
-  const [savedCount,   setSavedCount]   = useState(0);
-  const [isSpeaking,   setIsSpeaking]   = useState(false);
+  const [screen, setScreen] = useState("welcome");
+  const [name, setName] = useState("");
+  const [msgs, setMsgs] = useState([]);
+  const [inputVal, setInputVal] = useState("");
+  const [disabled, setDisabled] = useState(false);
+  const [qNum, setQNum] = useState(0);
+  const [elapsed, setElapsed] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
+  const [interim, setInterim] = useState("");
+  const [report, setReport] = useState(null);
+  const [savedCount, setSavedCount] = useState(0);
+  const [isSpeaking, setIsSpeaking] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  const [cohortStats,  setCohortStats]  = useState(null);
-  const [isChrome,     setIsChrome]     = useState(true);  // assume Chrome until proven otherwise
+  const [cohortStats, setCohortStats] = useState(null);
+  const [isChrome, setIsChrome] = useState(true);  // assume Chrome until proven otherwise
   const [showHowModal, setShowHowModal] = useState(false);
 
-  const convoRef       = useRef(null);
-  const bottomRef      = useRef(null);
-  const mediaRecRef    = useRef(null);  // for non-Chrome browsers
+  const convoRef = useRef(null);
+  const bottomRef = useRef(null);
+  const mediaRecRef = useRef(null);  // for non-Chrome browsers
   const recognitionRef = useRef(null);
-  const silenceRef     = useRef(null);
-  const pendingRef     = useRef("");
-  const timerRef       = useRef(null);
-  const isSpeakingRef  = useRef(false);
-  const isStoppingRef  = useRef(false);
-  const historyRef     = useRef([]);
-  const isSendingRef   = useRef(false);
-  const elapsedRef     = useRef(0);
-  const genAssessRef   = useRef(null);
+  const silenceRef = useRef(null);
+  const pendingRef = useRef("");
+  const timerRef = useRef(null);
+  const isSpeakingRef = useRef(false);
+  const isStoppingRef = useRef(false);
+  const historyRef = useRef([]);
+  const isSendingRef = useRef(false);
+  const elapsedRef = useRef(0);
+  const genAssessRef = useRef(null);
 
   const TOTAL_Q = 6;
   const MAX_DURATION = 600; // 10 minutes — interview auto-submits at this point
@@ -315,7 +315,7 @@ export default function TutorScreener() {
           advanceRate: Math.round((forward / data.length) * 100),
         });
       }
-    } catch {}
+    } catch { }
   }, []);
 
   /* Auto-scroll — always bring the latest message into view */
@@ -350,9 +350,9 @@ export default function TutorScreener() {
   const formatTime = s => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, "0")}`;
 
   // Countdown helpers
-  const remaining    = Math.max(MAX_DURATION - elapsed, 0);
-  const timerColor   = remaining <= 60 ? C.red : remaining <= 120 ? C.amber : C.green;
-  const timerPulse   = remaining <= 60;
+  const remaining = Math.max(MAX_DURATION - elapsed, 0);
+  const timerColor = remaining <= 60 ? C.red : remaining <= 120 ? C.amber : C.green;
+  const timerPulse = remaining <= 60;
 
   const stripMarkers = (text) =>
     text.replace(/##Q\d##/g, "").replace(/##INTERVIEW_COMPLETE##/g, "").trim();
@@ -375,7 +375,7 @@ export default function TutorScreener() {
       if (voice) u.voice = voice;
       isSpeakingRef.current = true;
       setIsSpeaking(true);
-      u.onend  = () => { isSpeakingRef.current = false; setIsSpeaking(false); onDone?.(); };
+      u.onend = () => { isSpeakingRef.current = false; setIsSpeaking(false); onDone?.(); };
       u.onerror = () => { isSpeakingRef.current = false; setIsSpeaking(false); onDone?.(); };
       window.speechSynthesis.speak(u);
     };
@@ -396,10 +396,10 @@ export default function TutorScreener() {
   }, []);
 
   /* Display helpers */
-  const addMsg      = useCallback((type, text) => {
+  const addMsg = useCallback((type, text) => {
     setMsgs(m => [...m.filter(x => x.type !== "thinking"), { type, text }]);
   }, []);
-  const addThinking    = useCallback(() => setMsgs(m => [...m, { type: "thinking" }]), []);
+  const addThinking = useCallback(() => setMsgs(m => [...m, { type: "thinking" }]), []);
   const removeThinking = useCallback(() => setMsgs(m => m.filter(x => x.type !== "thinking")), []);
 
   /* Send to Claude */
@@ -455,7 +455,7 @@ export default function TutorScreener() {
     } finally {
       isSendingRef.current = false;
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addMsg, addThinking, removeThinking, speak]);
 
   /* Start interview */
@@ -512,7 +512,7 @@ export default function TutorScreener() {
 
       // Send real email report
       const vals = Object.values(r.scores || {});
-      const avg = vals.length ? (vals.reduce((a,b) => a+b,0)/vals.length).toFixed(1) : "—";
+      const avg = vals.length ? (vals.reduce((a, b) => a + b, 0) / vals.length).toFixed(1) : "—";
       fetch("/api/send-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -565,13 +565,13 @@ export default function TutorScreener() {
 
     // Stop Web Speech API if running
     if (recognitionRef.current) {
-      try { recognitionRef.current.stop(); } catch (_) {}
+      try { recognitionRef.current.stop(); } catch (_) { }
       recognitionRef.current = null;
     }
 
     // Stop MediaRecorder if running (Firefox/Safari)
     if (mediaRecRef.current && mediaRecRef.current.state !== "inactive") {
-      try { mediaRecRef.current.stop(); } catch (_) {}
+      try { mediaRecRef.current.stop(); } catch (_) { }
       // onstop handler will handle sending
       mediaRecRef.current = null;
       isStoppingRef.current = false;
@@ -601,13 +601,13 @@ export default function TutorScreener() {
         let fin = "", tmp = "";
         for (let i = e.resultIndex; i < e.results.length; i++) {
           if (e.results[i].isFinal) fin += e.results[i][0].transcript + " ";
-          else                      tmp += e.results[i][0].transcript;
+          else tmp += e.results[i][0].transcript;
         }
         pendingRef.current += fin;
         setInterim((pendingRef.current + tmp).trim() || "Listening…");
         silenceRef.current = setTimeout(stopRecording, 3000);
       };
-      r.onend  = () => { if (recognitionRef.current) stopRecording(); };
+      r.onend = () => { if (recognitionRef.current) stopRecording(); };
       r.onerror = (ev) => { console.warn("Speech error:", ev.error); stopRecording(); };
       recognitionRef.current = r;
       r.start();
@@ -677,7 +677,7 @@ export default function TutorScreener() {
 
   const resetAll = () => {
     window.speechSynthesis?.cancel();
-    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch (_) {} recognitionRef.current = null; }
+    if (recognitionRef.current) { try { recognitionRef.current.stop(); } catch (_) { } recognitionRef.current = null; }
     clearInterval(timerRef.current);
     historyRef.current = [];
     isSendingRef.current = false;
@@ -742,12 +742,12 @@ export default function TutorScreener() {
       }}>
         <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
           <svg width="36" height="36" viewBox="0 0 44 44" fill="none">
-            <rect width="44" height="44" rx="13" fill="url(#navLG2)"/>
-            <defs><linearGradient id="navLG2" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stopColor="#6366f1"/><stop offset="1" stopColor="#a78bfa"/></linearGradient></defs>
-            <rect x="19" y="14" width="6" height="9" rx="3" fill="white"/>
-            <path d="M17 21.5c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
-            <line x1="22" y1="26.5" x2="22" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
-            <line x1="19" y1="29" x2="25" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round"/>
+            <rect width="44" height="44" rx="13" fill="url(#navLG2)" />
+            <defs><linearGradient id="navLG2" x1="0" y1="0" x2="44" y2="44" gradientUnits="userSpaceOnUse"><stop stopColor="#6366f1" /><stop offset="1" stopColor="#a78bfa" /></linearGradient></defs>
+            <rect x="19" y="14" width="6" height="9" rx="3" fill="white" />
+            <path d="M17 21.5c0 2.76 2.24 5 5 5s5-2.24 5-5" stroke="white" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+            <line x1="22" y1="26.5" x2="22" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
+            <line x1="19" y1="29" x2="25" y2="29" stroke="white" strokeWidth="1.5" strokeLinecap="round" />
           </svg>
           <div>
             <div style={{ fontSize: 17, fontWeight: 900, color: "#1e1b4b", letterSpacing: "-0.03em", lineHeight: 1 }}>Cuemath</div>
@@ -781,8 +781,8 @@ export default function TutorScreener() {
             onMouseLeave={e => { e.currentTarget.style.boxShadow = "0 2px 10px rgba(99,102,241,0.35)"; e.currentTarget.style.transform = ""; }}
           >
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="11" width="18" height="11" rx="2" fill="white" opacity="0.9"/>
-              <path d="M7 11V7a5 5 0 0110 0v4" stroke="white" strokeWidth="2.2" strokeLinecap="round" fill="none"/>
+              <rect x="3" y="11" width="18" height="11" rx="2" fill="white" opacity="0.9" />
+              <path d="M7 11V7a5 5 0 0110 0v4" stroke="white" strokeWidth="2.2" strokeLinecap="round" fill="none" />
             </svg>
             HR Portal
           </Link>
@@ -849,11 +849,11 @@ export default function TutorScreener() {
             </div>
             <div className="hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px" }}>
               {[
-                { label: "Communication Clarity", icon: "💬", bg: "rgba(14,165,233,0.07)",   bd: "rgba(14,165,233,0.2)" },
-                { label: "Warmth & Patience",      icon: "🤝", bg: "rgba(16,185,129,0.07)",  bd: "rgba(16,185,129,0.2)" },
-                { label: "Ability to Simplify",    icon: "🎯", bg: "rgba(79,70,229,0.07)",   bd: "rgba(79,70,229,0.18)" },
-                { label: "English Fluency",         icon: "🗣️", bg: "rgba(6,182,212,0.07)",   bd: "rgba(6,182,212,0.2)" },
-                { label: "Teaching Aptitude",       icon: "📚", bg: "rgba(52,211,153,0.08)",  bd: "rgba(52,211,153,0.22)" },
+                { label: "Communication Clarity", icon: "💬", bg: "rgba(14,165,233,0.07)", bd: "rgba(14,165,233,0.2)" },
+                { label: "Warmth & Patience", icon: "🤝", bg: "rgba(16,185,129,0.07)", bd: "rgba(16,185,129,0.2)" },
+                { label: "Ability to Simplify", icon: "🎯", bg: "rgba(79,70,229,0.07)", bd: "rgba(79,70,229,0.18)" },
+                { label: "English Fluency", icon: "🗣️", bg: "rgba(6,182,212,0.07)", bd: "rgba(6,182,212,0.2)" },
+                { label: "Teaching Aptitude", icon: "📚", bg: "rgba(52,211,153,0.08)", bd: "rgba(52,211,153,0.22)" },
               ].map(d => (
                 <div key={d.label} style={{
                   display: "flex", alignItems: "center", gap: 8, padding: "8px 12px", borderRadius: 10,
@@ -889,7 +889,7 @@ export default function TutorScreener() {
                 boxShadow: "0 0 0 4px rgba(99,102,241,0.08), 0 2px 8px rgba(0,0,0,0.04)",
               }}
               onFocus={e => { e.target.style.borderColor = "#6366f1"; e.target.style.boxShadow = "0 0 0 4px rgba(99,102,241,0.18), 0 2px 8px rgba(0,0,0,0.04)"; }}
-              onBlur={e  => { e.target.style.borderColor = "rgba(99,102,241,0.35)"; e.target.style.boxShadow = "0 0 0 4px rgba(99,102,241,0.08), 0 2px 8px rgba(0,0,0,0.04)"; }}
+              onBlur={e => { e.target.style.borderColor = "rgba(99,102,241,0.35)"; e.target.style.boxShadow = "0 0 0 4px rgba(99,102,241,0.08), 0 2px 8px rgba(0,0,0,0.04)"; }}
             />
             <button
               id="start-interview-btn"
@@ -1001,13 +1001,13 @@ export default function TutorScreener() {
           display: "flex", flexDirection: "column", position: "fixed",
           inset: 0, overflow: "hidden",
         }}>
-          {/* Ambient blobs */}
-          <div style={{ position: "fixed", top: "10%", left: "5%", width: 400, height: 400, background: "rgba(99,102,241,0.12)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
-          <div style={{ position: "fixed", bottom: "10%", right: "5%", width: 350, height: 350, background: "rgba(139,92,246,0.1)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
-          <div style={{ position: "fixed", top: "50%", left: "50%", width: 300, height: 300, background: "rgba(14,165,233,0.06)", borderRadius: "50%", filter: "blur(80px)", pointerEvents: "none", transform: "translate(-50%,-50%)" }} />
+          {/* Ambient blobs - responsive sizes */}
+          <div style={{ position: "fixed", top: "10%", left: "5%", width: "min(400px, 80vw)", height: "min(400px, 80vw)", background: "rgba(99,102,241,0.12)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
+          <div style={{ position: "fixed", bottom: "10%", right: "5%", width: "min(350px, 70vw)", height: "min(350px, 70vw)", background: "rgba(139,92,246,0.1)", borderRadius: "50%", filter: "blur(90px)", pointerEvents: "none" }} />
+          <div style={{ position: "fixed", top: "50%", left: "50%", width: "min(300px, 60vw)", height: "min(300px, 60vw)", background: "rgba(14,165,233,0.06)", borderRadius: "50%", filter: "blur(80px)", pointerEvents: "none", transform: "translate(-50%,-50%)" }} />
 
           {/* Header */}
-          <div style={{
+          <div className="interview-header-pad" style={{
             background: "rgba(255,255,255,0.05)",
             backdropFilter: "blur(20px)",
             borderBottom: "1px solid rgba(255,255,255,0.1)",
@@ -1023,13 +1023,13 @@ export default function TutorScreener() {
                 boxShadow: "0 4px 16px rgba(99,102,241,0.4)",
               }}>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                  <path d="M12 14c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4S8 3.79 8 6v4c0 2.21 1.79 4 4 4z" fill="#fff"/>
-                  <path d="M19 10v.5C19 14.64 15.86 18 12 18s-7-3.36-7-7.5V10H3v.5c0 4.61 3.36 8.47 7.75 9.35V22h2.5v-2.15C17.64 18.97 21 15.11 21 10.5V10h-2z" fill="#fff"/>
+                  <path d="M12 14c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4S8 3.79 8 6v4c0 2.21 1.79 4 4 4z" fill="#fff" />
+                  <path d="M19 10v.5C19 14.64 15.86 18 12 18s-7-3.36-7-7.5V10H3v.5c0 4.61 3.36 8.47 7.75 9.35V22h2.5v-2.15C17.64 18.97 21 15.11 21 10.5V10h-2z" fill="#fff" />
                 </svg>
               </div>
               <div>
-                <div style={{ fontWeight: 700, fontSize: 15, color: "#f1f5f9" }}>Chitti — Cuemath AI Interviewer</div>
-                <div style={{ fontSize: 12, color: "#94a3b8" }}>
+                <div className="interview-title" style={{ fontWeight: 700, fontSize: 15, color: "#f1f5f9" }}>Chitti — AI Interviewer</div>
+                <div className="interview-subtitle" style={{ fontSize: 12, color: "#94a3b8" }}>
                   Question {displayQ} of {TOTAL_Q}
                   {isSpeaking && <span style={{ color: "#a5b4fc", marginLeft: 8, fontSize: 11 }}>· Speaking…</span>}
                 </div>
@@ -1097,8 +1097,8 @@ export default function TutorScreener() {
               <div style={{ flex: 1 }} />
               {msgs.map((m, i) => {
                 if (m.type === "thinking") return <ThinkingBubble key={i} />;
-                if (m.type === "ai")       return <AIBubble key={i} text={m.text} />;
-                return                            <UserBubble key={i} text={m.text} initial={name[0]?.toUpperCase() || "U"} />;
+                if (m.type === "ai") return <AIBubble key={i} text={m.text} />;
+                return <UserBubble key={i} text={m.text} initial={name[0]?.toUpperCase() || "U"} />;
               })}
               {isSpeaking && <SpeakingIndicator />}
               {/* Invisible anchor — always scrolled into view */}
@@ -1136,7 +1136,7 @@ export default function TutorScreener() {
                 </div>
               )}
 
-              <div style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
+              <div className="input-row" style={{ display: "flex", gap: 10, alignItems: "flex-end" }}>
                 <textarea
                   id="response-input"
                   value={inputVal}
@@ -1147,20 +1147,22 @@ export default function TutorScreener() {
                   style={{
                     flex: 1, padding: "13px 16px",
                     border: "1.5px solid rgba(165,180,252,0.5)", borderRadius: 12,
-                    fontSize: 14, resize: "none", height: 50, fontFamily: "inherit",
+                    fontSize: 14, resize: "none", height: "clamp(50px, 8vh, 60px)", fontFamily: "inherit",
                     outline: "none", color: "#f1f5f9", lineHeight: 1.5,
                     background: "rgba(255,255,255,0.12)",
                     opacity: disabled ? 0.6 : 1, transition: "border-color 0.2s, box-shadow 0.2s",
                     boxShadow: "inset 0 1px 3px rgba(0,0,0,0.2)",
                   }}
                   onFocus={e => { if (!disabled) { e.target.style.borderColor = "#a5b4fc"; e.target.style.boxShadow = "0 0 0 3px rgba(99,102,241,0.25), inset 0 1px 3px rgba(0,0,0,0.2)"; } }}
-                  onBlur={e  => { e.target.style.borderColor = "rgba(165,180,252,0.5)"; e.target.style.boxShadow = "inset 0 1px 3px rgba(0,0,0,0.2)"; }}
+                  onBlur={e => { e.target.style.borderColor = "rgba(165,180,252,0.5)"; e.target.style.boxShadow = "inset 0 1px 3px rgba(0,0,0,0.2)"; }}
                 />
 
-                <button id="toggle-voice-btn" onClick={toggleVoice} disabled={disabled}
+                <button id="toggle-voice-btn" className="mic-btn" onClick={toggleVoice} disabled={disabled}
                   title={isRecording ? "Stop recording" : "Start voice input"}
+                  aria-label={isRecording ? "Stop voice recording" : "Start voice input"}
+                  aria-live="polite"
                   style={{
-                    width: 50, height: 50, borderRadius: 12, flexShrink: 0,
+                    width: "clamp(50px, 10vw, 60px)", height: "clamp(50px, 10vw, 60px)", borderRadius: 12, flexShrink: 0,
                     border: `2px solid ${isRecording ? C.red : "rgba(165,180,252,0.6)"}`,
                     background: isRecording ? "rgba(239,68,68,0.25)" : "rgba(99,102,241,0.2)",
                     display: "flex", alignItems: "center", justifyContent: "center",
@@ -1168,14 +1170,16 @@ export default function TutorScreener() {
                     boxShadow: isRecording ? "0 0 12px rgba(239,68,68,0.3)" : "0 0 8px rgba(99,102,241,0.2)",
                   }}>
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M12 14c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4S8 3.79 8 6v4c0 2.21 1.79 4 4 4z" fill={isRecording ? C.red : "#a5b4fc"}/>
-                    <path d="M19 10v.5C19 14.64 15.86 18 12 18s-7-3.36-7-7.5V10H3v.5c0 4.61 3.36 8.47 7.75 9.35V22h2.5v-2.15C17.64 18.97 21 15.11 21 10.5V10h-2z" fill={isRecording ? C.red : "#a5b4fc"}/>
+                    <path d="M12 14c2.21 0 4-1.79 4-4V6c0-2.21-1.79-4-4-4S8 3.79 8 6v4c0 2.21 1.79 4 4 4z" fill={isRecording ? C.red : "#a5b4fc"} />
+                    <path d="M19 10v.5C19 14.64 15.86 18 12 18s-7-3.36-7-7.5V10H3v.5c0 4.61 3.36 8.47 7.75 9.35V22h2.5v-2.15C17.64 18.97 21 15.11 21 10.5V10h-2z" fill={isRecording ? C.red : "#a5b4fc"} />
                   </svg>
                 </button>
 
-                <button id="send-btn" onClick={handleSendText} disabled={disabled || !inputVal.trim()}
+                <button id="send-btn" className="send-btn" onClick={handleSendText} disabled={disabled || !inputVal.trim()}
+                  aria-label="Send response"
+                  aria-disabled={disabled || !inputVal.trim()}
                   style={{
-                    height: 50, padding: "0 24px", borderRadius: 12, border: "none", flexShrink: 0,
+                    height: "clamp(50px, 10vw, 60px)", padding: "0 24px", borderRadius: 12, border: "none", flexShrink: 0,
                     background: (!disabled && inputVal.trim())
                       ? `linear-gradient(135deg,${C.indigo},#0ea5e9)` : "rgba(255,255,255,0.1)",
                     color: (!disabled && inputVal.trim()) ? "#fff" : "rgba(255,255,255,0.35)",
@@ -1188,7 +1192,7 @@ export default function TutorScreener() {
                 </button>
               </div>
 
-              <div style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.3)", textAlign: "center" }}>
+              <div className="input-hint" style={{ marginTop: 8, fontSize: 11, color: "rgba(255,255,255,0.3)", textAlign: "center" }}>
                 Enter to send · Shift+Enter for new line · 🎙 mic for voice input
               </div>
             </div>
@@ -1241,10 +1245,10 @@ export default function TutorScreener() {
         {showConfetti && <Confetti />}
         <Head><title>Assessment — {name} — Cuemath</title></Head>
         <div style={{ background: "#f4f6fb", minHeight: "100vh" }}>
-          <div style={{ maxWidth: 760, margin: "0 auto", padding: "36px 20px 56px" }}>
+          <div className="report-wrap" style={{ maxWidth: 760, margin: "0 auto", padding: "36px 20px 56px" }}>
 
             {/* — Report Sent to HR Banner — */}
-            <div style={{
+            <div className="report-banner" style={{
               background: "linear-gradient(135deg,#1e3a5f,#1e1b4b)",
               border: "1px solid rgba(99,102,241,0.4)",
               borderRadius: 16, padding: "14px 22px", marginBottom: 20,
@@ -1285,7 +1289,7 @@ export default function TutorScreener() {
             )}
 
             {/* Header */}
-            <div style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
+            <div className="report-header" style={{ display: "flex", alignItems: "center", gap: 16, marginBottom: 28 }}>
               <div style={{
                 width: 58, height: 58, borderRadius: 17, flexShrink: 0,
                 background: `linear-gradient(135deg,${C.indigo},${C.indigoLight})`,
@@ -1398,8 +1402,8 @@ export default function TutorScreener() {
                 fontWeight: 600, fontSize: 14, boxShadow: `0 4px 16px ${C.indigoGlow}`,
                 transition: "all 0.2s", cursor: "pointer",
               }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 28px ${C.indigoGlow}`; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "";              e.currentTarget.style.boxShadow = `0 4px 16px ${C.indigoGlow}`; }}>
+                onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 28px ${C.indigoGlow}`; }}
+                onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = `0 4px 16px ${C.indigoGlow}`; }}>
                 📄 Download Report (PDF)
               </button>
 
@@ -1412,21 +1416,21 @@ export default function TutorScreener() {
                   `Summary: ${report.summary}`,
                   ``,
                   `Scores:`,
-                  ...Object.entries(report.scores||{}).map(([k,v])=>`  ${k}: ${v}/10`),
+                  ...Object.entries(report.scores || {}).map(([k, v]) => `  ${k}: ${v}/10`),
                   ``,
                   `Recommendation: ${report.recommendation}`,
                 ].join("\n");
                 navigator.clipboard.writeText(text).then(() => {
                   const btn = document.getElementById("copy-summary-btn");
-                  if(btn){ btn.textContent = "✓ Copied!"; setTimeout(()=>{ btn.textContent="📋 Copy Summary"; },2000); }
+                  if (btn) { btn.textContent = "✓ Copied!"; setTimeout(() => { btn.textContent = "📋 Copy Summary"; }, 2000); }
                 });
               }} style={{
                 background: "#fff", border: "1.5px solid #c7d2fe",
                 color: C.indigo, padding: "13px 22px", borderRadius: 12,
                 fontWeight: 600, fontSize: 14, cursor: "pointer", transition: "all 0.2s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "#eef2ff"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "#fff"; }}>
+                onMouseEnter={e => { e.currentTarget.style.background = "#eef2ff"; }}
+                onMouseLeave={e => { e.currentTarget.style.background = "#fff"; }}>
                 📋 Copy Summary
               </button>
 
@@ -1445,8 +1449,8 @@ export default function TutorScreener() {
                 color: "#374151", padding: "13px 24px", borderRadius: 12,
                 fontWeight: 500, fontSize: 14, transition: "all 0.2s",
               }}
-              onMouseEnter={e => { e.currentTarget.style.borderColor = C.indigo; e.currentTarget.style.color = C.indigo; }}
-              onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.color = "#374151"; }}>
+                onMouseEnter={e => { e.currentTarget.style.borderColor = C.indigo; e.currentTarget.style.color = C.indigo; }}
+                onMouseLeave={e => { e.currentTarget.style.borderColor = "#e5e7eb"; e.currentTarget.style.color = "#374151"; }}>
                 New Interview
               </button>
             </div>
