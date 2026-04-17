@@ -299,23 +299,54 @@ export default function TutorScreener() {
 
   /* Load saved count + cohort stats on mount */
   useEffect(() => {
-    try {
-      const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-      setSavedCount(data.length);
-      if (data.length > 0) {
-        const avgs = data.map(i => {
-          const vals = Object.values(i.report?.scores || {});
-          return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
-        });
-        const avgScore = (avgs.reduce((a, b) => a + b, 0) / avgs.length).toFixed(1);
-        const forward = data.filter(i => i.report?.overall === "Move Forward").length;
-        setCohortStats({
-          total: data.length,
-          avgScore,
-          advanceRate: Math.round((forward / data.length) * 100),
-        });
+    async function loadCountAndStats() {
+      try {
+        // Try to fetch from Supabase (shared database) - same as dashboard
+        const { data: sbData, error } = await supabase
+          .from("interviews")
+          .select("*")
+          .order("date", { ascending: false });
+
+        if (!error && sbData && sbData.length > 0) {
+          setSavedCount(sbData.length);
+          const avgs = sbData.map(i => {
+            const vals = Object.values(i.report?.scores || {});
+            return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+          });
+          const avgScore = (avgs.reduce((a, b) => a + b, 0) / avgs.length).toFixed(1);
+          const forward = sbData.filter(i => i.report?.overall === "Move Forward").length;
+          setCohortStats({
+            total: sbData.length,
+            avgScore,
+            advanceRate: Math.round((forward / sbData.length) * 100),
+          });
+          return;
+        }
+      } catch (err) {
+        console.warn("Supabase fetch failed, falling back to localStorage:", err);
       }
-    } catch { }
+
+      // Fallback to localStorage
+      try {
+        const data = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+        setSavedCount(data.length);
+        if (data.length > 0) {
+          const avgs = data.map(i => {
+            const vals = Object.values(i.report?.scores || {});
+            return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+          });
+          const avgScore = (avgs.reduce((a, b) => a + b, 0) / avgs.length).toFixed(1);
+          const forward = data.filter(i => i.report?.overall === "Move Forward").length;
+          setCohortStats({
+            total: data.length,
+            avgScore,
+            advanceRate: Math.round((forward / data.length) * 100),
+          });
+        }
+      } catch { }
+    }
+
+    loadCountAndStats();
   }, []);
 
   /* Auto-scroll — always bring the latest message into view */
